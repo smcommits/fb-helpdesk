@@ -15,19 +15,19 @@ import './stylesheets/Index.scss';
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 const store = createStore(rootReducer, composedEnhancer);
 
-const initializeApp = (loginStatus) => {
+const initializeApp = (loginResponse) => {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <App loggedIn={loginStatus} />
+        <App loginResponse={loginResponse} />
       </Provider>
     </React.StrictMode>,
     document.getElementById('root'),
   );
 };
 
-FacebookSDK.initialize().then((loginStatus) => {
-  initializeApp(loginStatus);
+FacebookSDK.initialize().then((response) => {
+  initializeApp(response);
 });
 
 // If you want to start measuring performance in your app, pass a function

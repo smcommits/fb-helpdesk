@@ -2,12 +2,19 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Login from './Login';
 import FacebookSDK from '../core/helpers/facebookAPI';
+import Home from './Home';
 
 function App(props) {
-  const { loggedIn } = props;
+  const { loginResponse, setCurrentUser, currentUser } = props;
+  const { authResponse, status } = loginResponse;
+
+  if (status === 'connected') {
+    setCurrentUser(authResponse);
+  }
   return (
     <>
-      <Login loggedIn={loggedIn}/>
+      <Login loginStatus={status} />
+      {currentUser.accessToken && <Home />}
     </>
   );
 }
@@ -16,6 +23,12 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
 
-const connectedApp = connect(mapStateToProps, null)(App);
+const mapDispatchToProp = (dispatch) => ({
+  setCurrentUser: (userObject) => {
+    dispatch({ type: 'SET_CURRENT_USER_TRUE', payload: userObject });
+  },
+});
+
+const connectedApp = connect(mapStateToProps, mapDispatchToProp)(App);
 
 export default connectedApp;

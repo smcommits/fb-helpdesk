@@ -12,12 +12,9 @@ const FacebookSDK = (() => {
 
       FB.AppEvents.logPageView();
 
-      FB.getLoginStatus(({ authResponse }) => {
-        if (authResponse) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+      FB.getLoginStatus((response) => {
+        console.log(response);
+        resolve(response);
       });
     };
 

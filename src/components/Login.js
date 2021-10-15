@@ -5,9 +5,12 @@ import { connect } from 'react-redux';
 import styles from '../stylesheets/Login.module.scss';
 
 const Login = (props) => {
-  const { loggedIn, setCurrentUser } = props;
+  const { loginStatus, setCurrentUser } = props;
+  if (loginStatus === 'connected') return null;
+  window.loginCallback = ({ authResponse, status }) => {
+    if (status === 'connected') setCurrentUser(authResponse);
+  };
 
-  if (loggedIn) return null;
   return (
     <div className={styles.main}>
       <h2>Please login using Facebook to use the app.</h2>
@@ -17,8 +20,9 @@ const Login = (props) => {
         data-button-type="continue_with"
         data-layout="default"
         data-auto-logout-link="false"
+        data-onlogin="loginCallback"
         data-use-continue-as="false"
-        data-scope="public_profile, email, user_posts, user_messenger_contact, user_location"
+        data-scope="public_profile, email, user_location"
       />
     </div>
   );
