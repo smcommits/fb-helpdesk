@@ -1,9 +1,21 @@
-function App() {
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Login from './Login';
+import FacebookSDK from '../core/helpers/facebookAPI';
+
+function App(props) {
+  const { loggedIn } = props;
   return (
-    <div className="App">
-      <h1>Just me here!</h1>
-    </div>
+    <>
+      <Login loggedIn={loggedIn}/>
+    </>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+const connectedApp = connect(mapStateToProps, null)(App);
+
+export default connectedApp;

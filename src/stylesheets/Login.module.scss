@@ -1,0 +1,25 @@
+@import './Variables.scss';
+
+.main {
+  background-color: $color-background;
+  box-shadow: $shadow-small;
+  max-width: 500px;
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 2rem;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+  h2 {
+    font-weight: normal;
+  }
+
+  div {
+    margin-top: 2rem;
+  }
+}
+
+
+
