@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reportWebVitals from './reportWebVitals';
 import App from './components/App';
 import rootReducer from './reducers/index';
-import FacebookSDK from './core/helpers/facebookAPI';
+import FacebookSDK from './core/services/facebookAPI';
 
 import './stylesheets/Index.scss';
 

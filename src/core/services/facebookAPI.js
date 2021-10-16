@@ -1,4 +1,6 @@
-const facebookAppId = '606478270384683';
+import axios from 'axios';
+
+const facebookAppId = '398992005006851';
 
 const FacebookSDK = (() => {
   const initialize = () => new Promise((resolve) => {
@@ -28,8 +30,19 @@ const FacebookSDK = (() => {
     }(document, 'script', 'facebook-jssdk'));
   });
 
+  const getProfile = async (id) => {
+    try {
+      const res = await axios.get(`https://graph.facebook.com/${id}?fields=name,email,picture`);
+      return res;
+    } catch (err) {
+      if (err.response) return err.response;
+      return err;
+    }
+  };
+
   return {
     initialize,
+    getProfile,
   };
 })();
 

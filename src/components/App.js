@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Login from './Login';
-import FacebookSDK from '../core/helpers/facebookAPI';
 import Home from './Home';
 
 function App(props) {
