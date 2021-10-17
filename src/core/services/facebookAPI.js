@@ -15,7 +15,7 @@ const FacebookSDK = (() => {
       FB.AppEvents.logPageView();
 
       FB.getLoginStatus((response) => {
-        console.log(response);
+        console.log(response)
         resolve(response);
       });
     };

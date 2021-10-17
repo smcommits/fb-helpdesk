@@ -1,0 +1,84 @@
+@import './Variables.scss';
+
+.main {
+  position: fixed;
+  left: calc(20% + 80px);
+  width: 60%;
+  top: 0;
+  bottom: 0;
+}
+
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid $color-light-gray;
+}
+
+
+.chat {
+  background-color: #f6f6f7;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.textWrapper {
+  display: inline-block;
+}
+.singleText {
+  display: flex;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    align-self: center;
+  }
+
+  .text {
+    background-color: #fff;
+    display: inline-block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  }
+
+
+  .time {
+    font-size: 12px;
+    margin-top: 0.5rem;
+  }
+}
+
+
+.sender {
+  img {
+    margin-right: 0.5rem;
+  }
+}
+
+.user {
+  align-self: flex-end;
+  img {
+    margin-left: 0.5rem;
+    order: 2;
+  }
+}
+
+
+.messageInput {
+  input {
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    border: 1px  solid #648cbb;
+  }
+}

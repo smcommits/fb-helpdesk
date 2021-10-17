@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import Sidebar from './Sidebar';
+import Conversation from './Conversation';
 
-const Home = props => {
-
-  FB.api('/me/accounts', (response) => {
-      console.log(response);
-    });
+const Home = (props) => {
+  const a = '';
   return (
-    <h1>Home</h1>
-  )
-}
+    <section>
+      <Sidebar />
+      <Conversation/>
+    </section>
+  );
+};
 
-export default Home
+export default Home;

@@ -1,0 +1,26 @@
+.main {
+  background: #004e96;
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+}
+
+.navList {
+  list-style: none;
+}
+
+.navItem {
+  font-size: 24px;
+  padding: 1rem 1.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.active {
+  background-color: #fff;
+  color: #004e96;
+}
+
+

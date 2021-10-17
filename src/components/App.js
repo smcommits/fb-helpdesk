@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
 import Login from './Login';
 import Home from './Home';
@@ -7,12 +8,23 @@ function App(props) {
   const { loginResponse, setCurrentUser, currentUser } = props;
   const { authResponse, status } = loginResponse;
 
-  if (status === 'connected') {
+  const socket = io('https://helpdesk-fb.herokuapp.com');
+
+  socket.on('connect', () => {
+    socket.emit('join', 'messagengerRoom');
+  });
+
+  socket.on('message', (data) => {
+    console.log(data);
+  });
+
+  if (authResponse) {
     setCurrentUser(authResponse);
   }
+
   return (
     <>
-      <Login loginStatus={status} />
+      <Login loginStatus={authResponse} />
       {currentUser.accessToken && <Home />}
     </>
   );

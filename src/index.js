@@ -12,6 +12,7 @@ import FacebookSDK from './core/services/facebookAPI';
 
 import './stylesheets/Index.scss';
 
+
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 const store = createStore(rootReducer, composedEnhancer);
 

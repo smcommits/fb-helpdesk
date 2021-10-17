@@ -1,0 +1,71 @@
+@import './Variables.scss';
+
+.list {
+  position: fixed;
+  left: 80px;
+  width: 20%;
+  background-color: #fff;
+  top: 0;
+  bottom: 0;
+}
+
+.conversationItem {
+  padding: 1rem;
+  font-size: 12px;
+  color: $color-text-secondary;
+  input {
+    align-self: center;
+  }
+
+  .messageInfo {
+    padding: 0 1rem;
+  }
+  .top {
+    display: flex;
+  }
+
+  .name {
+    font-size: 16px;
+    color: $color-foreground;
+  }
+  .type {
+    font-weight: bold;
+  }
+
+  .conversationTime {
+    margin-left: auto;
+    font-weight: bold;
+  }
+
+  .bottom {
+    margin-top: 1rem;
+  }
+}
+
+.active {
+  background: #edeeef;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid $color-light-gray;
+
+  .left{
+    display: flex;
+    align-items: center;
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  i {
+    color: $color-text-secondary;
+    padding: 0 .8rem;
+  }
+}
+
+
