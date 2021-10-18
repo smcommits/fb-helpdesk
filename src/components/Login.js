@@ -8,14 +8,14 @@ const endpoint = 'https://helpdesk-fb.herokuapp.com';
 
 const Login = (props) => {
   const { loginStatus, currentUser, setCurrentUser } = props;
-
   if (loginStatus || currentUser.accessToken) return null;
 
   const getProfile = (facebookID) => {
     FB.api(facebookID, { fields: 'name, picture' }, (response) => {
       if (response && !response.error) {
         const { name } = response;
-        Auth.authenticate({ facebookID, name });
+        console.log()
+        Auth.authenticate({ facebookID, name })
       }
     });
   };

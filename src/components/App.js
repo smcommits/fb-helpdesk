@@ -7,16 +7,7 @@ import Home from './Home';
 function App(props) {
   const { loginResponse, setCurrentUser, currentUser } = props;
   const { authResponse, status } = loginResponse;
-
-  const socket = io('https://helpdesk-fb.herokuapp.com');
-
-  socket.on('connect', () => {
-    socket.emit('join', 'messagengerRoom');
-  });
-
-  socket.on('message', (data) => {
-    console.log(data);
-  });
+  console.log(currentUser)
 
   if (authResponse) {
     setCurrentUser(authResponse);
@@ -25,7 +16,7 @@ function App(props) {
   return (
     <>
       <Login loginStatus={authResponse} />
-      {currentUser.accessToken && <Home />}
+      {currentUser.accessToken && <Home/>}
     </>
   );
 }

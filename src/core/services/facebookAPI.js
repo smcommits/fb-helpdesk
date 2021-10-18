@@ -1,8 +1,12 @@
 import axios from 'axios';
 
-const facebookAppId = '398992005006851';
+const facebookAppId = '305021061060953';
 
 const FacebookSDK = (() => {
+  const config = {
+    baseURI: 'https://graph.facebook.com',
+  };
+
   const initialize = () => new Promise((resolve) => {
     window.fbAsyncInit = function () {
       FB.init({
@@ -15,7 +19,7 @@ const FacebookSDK = (() => {
       FB.AppEvents.logPageView();
 
       FB.getLoginStatus((response) => {
-        console.log(response)
+        console.log(response);
         resolve(response);
       });
     };
@@ -40,9 +44,32 @@ const FacebookSDK = (() => {
     }
   };
 
+  const subscribedApps = async (fields, accessToken, pageId) => {
+    const url = new URL(`${config.baseURI}/${pageId}/subscribed_apps`);
+    url.search = new URLSearchParams({
+      access_token: accessToken,
+      subscribed_fields: fields,
+    });
+    const res = await axios.post(url);
+    if (res.ok) {
+      return res;
+    }
+  };
+
+  const getPageInfo = async () => {
+    try {
+      const res = await axios.get(`${config.baseURI}/me/accounts`);
+      return res;
+    } catch (err) {
+      return err;
+    }
+  };
+
   return {
     initialize,
     getProfile,
+    subscribedApps,
+    getPageInfo,
   };
 })();
 
