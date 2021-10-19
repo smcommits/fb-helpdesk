@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
-import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Login from './Login';
 import Home from './Home';
 
 function App(props) {
   const { loginResponse, setCurrentUser, currentUser } = props;
-  const { authResponse, status } = loginResponse;
-  console.log(currentUser)
+  const { authResponse } = loginResponse;
 
   if (authResponse) {
     setCurrentUser(authResponse);
@@ -16,7 +14,7 @@ function App(props) {
   return (
     <>
       <Login loginStatus={authResponse} />
-      {currentUser.accessToken && <Home/>}
+      {currentUser.accessToken && <Home />}
     </>
   );
 }
@@ -32,5 +30,11 @@ const mapDispatchToProp = (dispatch) => ({
 });
 
 const connectedApp = connect(mapStateToProps, mapDispatchToProp)(App);
+
+App.propTypes = {
+  loginResponse: PropTypes.instanceOf(Object).isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default connectedApp;

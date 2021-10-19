@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import dotenv from 'dotenv';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import reportWebVitals from './reportWebVitals';
 import App from './components/App';
@@ -12,8 +11,7 @@ import FacebookSDK from './core/services/facebookAPI';
 
 import './stylesheets/Index.scss';
 
-
-const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
+const composedEnhancer = applyMiddleware(thunkMiddleware);
 const store = createStore(rootReducer, composedEnhancer);
 
 const initializeApp = (loginResponse) => {

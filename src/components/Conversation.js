@@ -1,13 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import CoversationList from './CoversationList';
 import socket from '../core/services/socket';
 import styles from '../stylesheets/Conversation.module.scss';
+import { addMessages, addComment } from '../reducers/conversation';
 import Message from './Message';
+import Customer from './Customer';
 
 const Conversation = (props) => {
   const [activeConversation, setActiveConversation] = useState({});
-  const { currentUser, initializeConversation, conversations} = props;
+  const {
+    currentUser, pushMessage, conversations, page, pushComment,
+  } = props;
+
+  const handleReceivedMessage = (message) => {
+    FB.api(`/${message.senderPSID}`,
+      {
+        fields: 'first_name, last_name, profile_pic',
+        access_token: page.accessToken,
+      }, (senderInfo) => {
+        if (senderInfo.error) {
+          return null;
+        }
+        if (message.type === 'comment') {
+          pushComment(message, senderInfo);
+        } else {
+          pushMessage(message, senderInfo);
+        }
+      });
+  };
 
   const initializeSocketConnection = () => {
     socket.on('connect', () => {
@@ -18,13 +40,9 @@ const Conversation = (props) => {
     });
   };
 
-  const handleReceivedMessage = (message) => {
-    initializeConversation(message);
-  };
-
-  const conversationExists = (conversations) => {
-
-  }
+  const findActiveConversation = () => conversations.find(
+    (conversation) => conversation.id === activeConversation,
+  );
 
   useEffect(() => {
     initializeSocketConnection();
@@ -36,8 +54,24 @@ const Conversation = (props) => {
 
   return (
     <>
-      <CoversationList styles={styles} />
-      <Message />
+      <CoversationList
+        active={activeConversation}
+        setActive={setActiveConversation}
+        conversations={conversations}
+        styles={styles}
+        currentUser={currentUser}
+      />
+      <Message
+        conversation={findActiveConversation()}
+        handReceived={handleReceivedMessage}
+        currentUser={currentUser}
+        page={page}
+      />
+      <Customer
+        conversation={findActiveConversation()}
+        currentUser={currentUser}
+        page={page}
+      />
     </>
   );
 };
@@ -45,13 +79,25 @@ const Conversation = (props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
   conversations: state.conversations,
+  page: state.page,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  initializeConversation: (message) => {
-    dispatch({ type: 'NEW_CONVERSATION', payload: { id: message.message.conversation, messages: [message.message], sender: message.senderPSID } });
+  pushMessage: (message, senderInfo) => {
+    dispatch(addMessages(message, senderInfo));
+  },
+  pushComment: (message, senderInfo) => {
+    dispatch(addComment(message, senderInfo));
   },
 });
+
+Conversation.propTypes = {
+  currentUser: PropTypes.instanceOf(Object).isRequired,
+  pushMessage: PropTypes.func.isRequired,
+  conversations: PropTypes.instanceOf(Object).isRequired,
+  page: PropTypes.instanceOf(Object).isRequired,
+  pushComment: PropTypes.func.isRequired,
+};
 
 const ConnectedConversation = connect(mapStateToProps, mapDispatchToProps)(Conversation);
 

@@ -19,7 +19,6 @@ const FacebookSDK = (() => {
       FB.AppEvents.logPageView();
 
       FB.getLoginStatus((response) => {
-        console.log(response);
         resolve(response);
       });
     };
@@ -65,11 +64,19 @@ const FacebookSDK = (() => {
     }
   };
 
+  const replyComment = async (commentID, accessToken, text) => {
+    FB.api(`${commentID}/comments`, 'post', {
+      message: text,
+      access_token: accessToken,
+    }, (res) => res);
+  };
+
   return {
     initialize,
     getProfile,
     subscribedApps,
     getPageInfo,
+    replyComment,
   };
 })();
 
